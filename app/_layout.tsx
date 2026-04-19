@@ -7,6 +7,8 @@ export const unstable_settings = {
   initialRouteName: "(tabs)",
 };
 
+SplashScreen.preventAutoHideAsync();
+
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     "sans-regular": require("../assets/fonts/PlusJakartaSans-Regular.ttf"),
