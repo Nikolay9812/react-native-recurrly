@@ -3,6 +3,10 @@ import "@/global.css";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 
+export const unstable_settings = {
+  initialRouteName: "(tabs)",
+};
+
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     "sans-regular": require("../assets/fonts/PlusJakartaSans-Regular.ttf"),
