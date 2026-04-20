@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "WebFetch(domain:postimg.cc)",
-      "WebFetch(domain:ibb.co)",
-      "WebFetch(domain:i.ibb.co)"
-    ]
-  }
-}

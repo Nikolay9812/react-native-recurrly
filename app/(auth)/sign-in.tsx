@@ -157,6 +157,7 @@ export default function SignIn() {
                     signIn.reset();
                     setStep("credentials");
                     setCode("");
+                    setLocalError("");
                   }}
                 >
                   <Text className="auth-link">← Back</Text>
