@@ -148,7 +148,7 @@ export default function SignUp() {
               </View>
 
               <View className="auth-link-row">
-                <Pressable onPress={() => setStep("register")}>
+                <Pressable onPress={() => { setStep("register"); setCode(""); setLocalError(""); }}>
                   <Text className="auth-link">← Back to sign up</Text>
                 </Pressable>
               </View>

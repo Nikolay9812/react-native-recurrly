@@ -10,18 +10,38 @@ const SafeAreaView = styled(RNSafeAreaView);
 type RowProps = {
   label: string;
   value?: string;
+  onPress?: () => void;
 };
 
-const Row = ({ label, value }: RowProps) => (
-  <View className="flex-row items-center justify-between py-4 border-b border-border">
-    <Text className="text-base font-sans-medium text-primary">{label}</Text>
-    {value ? (
-      <Text className="text-sm font-sans-medium text-muted-foreground">{value}</Text>
-    ) : (
-      <Text className="text-muted-foreground font-sans-semibold text-lg">›</Text>
-    )}
-  </View>
-);
+const Row = ({ label, value, onPress }: RowProps) => {
+  const inner = (
+    <>
+      <Text className="text-base font-sans-medium text-primary">{label}</Text>
+      {value ? (
+        <Text className="text-sm font-sans-medium text-muted-foreground">{value}</Text>
+      ) : onPress ? (
+        <Text className="text-muted-foreground font-sans-semibold text-lg">›</Text>
+      ) : null}
+    </>
+  );
+
+  if (onPress) {
+    return (
+      <Pressable
+        className="flex-row items-center justify-between py-4 border-b border-border"
+        onPress={onPress}
+      >
+        {inner}
+      </Pressable>
+    );
+  }
+
+  return (
+    <View className="flex-row items-center justify-between py-4 border-b border-border">
+      {inner}
+    </View>
+  );
+};
 
 export default function Settings() {
   const { signOut } = useClerk();
