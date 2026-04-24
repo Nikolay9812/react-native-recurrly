@@ -1,4 +1,4 @@
-import { View, Text, Pressable, ScrollView } from "react-native";
+import { View, Text, Pressable, ScrollView, Image } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 import { styled } from "nativewind";
 import { useClerk, useUser } from "@clerk/expo";
@@ -53,10 +53,6 @@ export default function Settings() {
     router.replace("/(auth)/sign-in");
   };
 
-  const initials = user?.firstName
-    ? `${user.firstName[0]}${user.lastName?.[0] ?? ""}`.toUpperCase()
-    : (user?.emailAddresses[0]?.emailAddress?.[0] ?? "?").toUpperCase();
-
   const displayName =
     user?.fullName ??
     user?.emailAddresses[0]?.emailAddress ??
@@ -76,11 +72,15 @@ export default function Settings() {
 
           {/* Profile card */}
           <View className="rounded-3xl border border-border bg-card p-6 items-center mb-6">
-            <View className="size-20 rounded-full bg-accent items-center justify-center mb-3">
-              <Text className="text-2xl font-sans-extrabold text-background">
-                {initials}
-              </Text>
-            </View>
+            {user?.imageUrl ? (
+              <Image source={{ uri: user.imageUrl }} className="size-20 rounded-full mb-3" />
+            ) : (
+              <View className="size-20 rounded-full mb-3" style={{ backgroundColor: "#d3d3d3", alignItems: "center", justifyContent: "center" }}>
+                <Text style={{ fontSize: 28, color: "white", fontFamily: "sans-bold" }}>
+                  {(displayName ?? "U").charAt(0).toUpperCase()}
+                </Text>
+              </View>
+            )}
             <Text className="text-xl font-sans-bold text-primary">{displayName}</Text>
             {email ? (
               <Text className="text-sm font-sans-medium text-muted-foreground mt-1">
