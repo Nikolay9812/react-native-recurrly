@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { ClerkProvider } from "@clerk/expo";
 import { tokenCache } from "@clerk/expo/token-cache";
 import { PostHogProvider } from "posthog-react-native";
+import { SubscriptionsProvider } from "@/context/SubscriptionsContext";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -38,7 +39,9 @@ export default function RootLayout() {
       options={{ host: process.env.EXPO_PUBLIC_POSTHOG_HOST }}
     >
       <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-        <Stack screenOptions={{ headerShown: false }} />
+        <SubscriptionsProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+        </SubscriptionsProvider>
       </ClerkProvider>
     </PostHogProvider>
   );
