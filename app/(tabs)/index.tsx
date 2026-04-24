@@ -39,10 +39,15 @@ export default function App() {
           <>
             <View className="home-header">
               <View className="home-user">
-                <Image
-                  source={{ uri: user?.imageUrl }}
-                  className="home-avatar"
-                />
+                {user?.imageUrl ? (
+                  <Image source={{ uri: user.imageUrl }} className="home-avatar" />
+                ) : (
+                  <View className="home-avatar" style={{ backgroundColor: "#d3d3d3", alignItems: "center", justifyContent: "center" }}>
+                    <Text style={{ fontSize: 16, color: "white", fontFamily: "sans-bold" }}>
+                      {displayName.charAt(0).toUpperCase()}
+                    </Text>
+                  </View>
+                )}
                 <Text className="home-user-name">{displayName}</Text>
               </View>
 

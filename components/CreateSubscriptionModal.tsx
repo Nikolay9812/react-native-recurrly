@@ -14,6 +14,7 @@ import clsx from "clsx";
 import dayjs from "dayjs";
 import { icons } from "@/constants/icons";
 import { getBrandConfig } from "@/constants/brandIcons";
+import { posthog } from "@/lib/posthog";
 
 const CATEGORIES = [
   "Entertainment",
@@ -54,7 +55,8 @@ export default function CreateSubscriptionModal({
   const [category, setCategory] = useState("");
 
   const parsedPrice = parseFloat(price);
-  const isValid = name.trim().length > 0 && !isNaN(parsedPrice) && parsedPrice > 0;
+  const isValid =
+    name.trim().length > 0 && !isNaN(parsedPrice) && parsedPrice > 0;
 
   const brandMatch = getBrandConfig(name);
   const previewIcon = brandMatch ? brandMatch.icon : icons.wallet;
@@ -94,11 +96,21 @@ export default function CreateSubscriptionModal({
       status: "active",
       startDate: now.toISOString(),
       renewalDate,
-      icon: brandMatch ? brandMatch.icon : icons.wallet,
-      color: brandMatch ? brandMatch.color : CATEGORY_COLORS[selectedCategory] ?? "#d3d3d3",
+      icon: previewIcon,
+      color: brandMatch
+        ? brandMatch.color
+        : (CATEGORY_COLORS[selectedCategory] ?? "#d3d3d3"),
     };
 
     onSubmit(subscription);
+    posthog?.capture("subscription_created", {
+      name: name.trim(),
+      price: parsedPrice,
+      currency: "USD",
+      frequency,
+      category: selectedCategory,
+      brand_matched: !!brandMatch,
+    });
     resetForm();
     onClose();
   };
@@ -130,7 +142,13 @@ export default function CreateSubscriptionModal({
               <View className="modal-body">
                 <View className="auth-field">
                   <Text className="auth-label">Name</Text>
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 8,
+                    }}
+                  >
                     <TextInput
                       className="auth-input"
                       style={{ flex: 1 }}

@@ -72,10 +72,15 @@ export default function Settings() {
 
           {/* Profile card */}
           <View className="rounded-3xl border border-border bg-card p-6 items-center mb-6">
-            <Image
-              source={{ uri: user?.imageUrl }}
-              className="size-20 rounded-full mb-3"
-            />
+            {user?.imageUrl ? (
+              <Image source={{ uri: user.imageUrl }} className="size-20 rounded-full mb-3" />
+            ) : (
+              <View className="size-20 rounded-full mb-3" style={{ backgroundColor: "#d3d3d3", alignItems: "center", justifyContent: "center" }}>
+                <Text style={{ fontSize: 28, color: "white", fontFamily: "sans-bold" }}>
+                  {(displayName ?? "U").charAt(0).toUpperCase()}
+                </Text>
+              </View>
+            )}
             <Text className="text-xl font-sans-bold text-primary">{displayName}</Text>
             {email ? (
               <Text className="text-sm font-sans-medium text-muted-foreground mt-1">

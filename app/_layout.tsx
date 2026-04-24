@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/expo";
 import { tokenCache } from "@clerk/expo/token-cache";
 import { PostHogProvider } from "posthog-react-native";
 import { SubscriptionsProvider } from "@/context/SubscriptionsContext";
+import { posthog } from "@/lib/posthog";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -34,10 +35,7 @@ export default function RootLayout() {
   if (!fontsLoaded) return null;
 
   return (
-    <PostHogProvider
-      apiKey={process.env.EXPO_PUBLIC_POSTHOG_API_KEY!}
-      options={{ host: process.env.EXPO_PUBLIC_POSTHOG_HOST }}
-    >
+    <PostHogProvider client={posthog}>
       <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
         <SubscriptionsProvider>
           <Stack screenOptions={{ headerShown: false }} />
