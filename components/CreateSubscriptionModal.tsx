@@ -54,9 +54,10 @@ export default function CreateSubscriptionModal({
   const [frequency, setFrequency] = useState<"Monthly" | "Yearly">("Monthly");
   const [category, setCategory] = useState("");
 
-  const parsedPrice = parseFloat(price);
+  const PRICE_RE = /^\d+\.?\d*$|^\.\d+$/;
+  const parsedPrice = PRICE_RE.test(price.trim()) ? Number(price.trim()) : NaN;
   const isValid =
-    name.trim().length > 0 && !isNaN(parsedPrice) && parsedPrice > 0;
+    name.trim().length > 0 && Number.isFinite(parsedPrice) && parsedPrice > 0;
 
   const brandMatch = getBrandConfig(name);
   const previewIcon = brandMatch ? brandMatch.icon : icons.wallet;
@@ -104,7 +105,7 @@ export default function CreateSubscriptionModal({
 
     onSubmit(subscription);
     posthog?.capture("subscription_created", {
-      name: name.trim(),
+      subscription_id: subscription.id,
       price: parsedPrice,
       currency: "USD",
       frequency,
@@ -130,7 +131,12 @@ export default function CreateSubscriptionModal({
           <View className="modal-container">
             <View className="modal-header">
               <Text className="modal-title">New Subscription</Text>
-              <Pressable className="modal-close" onPress={handleClose}>
+              <Pressable
+                className="modal-close"
+                onPress={handleClose}
+                accessibilityRole="button"
+                accessibilityLabel="Close subscription modal"
+              >
                 <Text className="modal-close-text">✕</Text>
               </Pressable>
             </View>
@@ -200,6 +206,9 @@ export default function CreateSubscriptionModal({
                           frequency === opt && "picker-option-active",
                         )}
                         onPress={() => setFrequency(opt)}
+                        accessibilityRole="button"
+                        accessibilityLabel={opt}
+                        accessibilityState={{ selected: frequency === opt }}
                       >
                         <Text
                           className={clsx(
@@ -225,6 +234,9 @@ export default function CreateSubscriptionModal({
                           category === cat && "category-chip-active",
                         )}
                         onPress={() => setCategory(cat)}
+                        accessibilityRole="button"
+                        accessibilityLabel={cat}
+                        accessibilityState={{ selected: category === cat }}
                       >
                         <Text
                           className={clsx(
@@ -246,6 +258,9 @@ export default function CreateSubscriptionModal({
                   )}
                   onPress={handleSubmit}
                   disabled={!isValid}
+                  accessibilityRole="button"
+                  accessibilityLabel="Add Subscription"
+                  accessibilityState={{ disabled: !isValid }}
                 >
                   <Text className="auth-button-text">Add Subscription</Text>
                 </Pressable>
