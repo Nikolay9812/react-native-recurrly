@@ -50,7 +50,7 @@ export default function SignIn() {
       await finalize();
     } else if (signIn.status === "needs_client_trust") {
       const emailFactor = signIn.supportedSecondFactors?.find(
-        (f: { strategy: string }) => f.strategy === "email_code"
+        (f: { strategy: string }) => f.strategy === "email_code",
       );
       if (emailFactor) {
         await signIn.mfa.sendEmailCode();
@@ -74,7 +74,13 @@ export default function SignIn() {
     }
   };
 
-  const BrandBlock = ({ title, subtitle }: { title: string; subtitle: string }) => (
+  const BrandBlock = ({
+    title,
+    subtitle,
+  }: {
+    title: string;
+    subtitle: string;
+  }) => (
     <View className="auth-brand-block">
       <View className="auth-logo-wrap">
         <View className="auth-logo-mark">
@@ -125,7 +131,9 @@ export default function SignIn() {
                       autoFocus
                     />
                     {errors?.fields?.code ? (
-                      <Text className="auth-error">{errors.fields.code.message}</Text>
+                      <Text className="auth-error">
+                        {errors.fields.code.message}
+                      </Text>
                     ) : null}
                     {localError ? (
                       <Text className="auth-error">{localError}</Text>
@@ -204,7 +212,9 @@ export default function SignIn() {
                     autoComplete="email"
                   />
                   {errors?.fields?.identifier ? (
-                    <Text className="auth-error">{errors.fields.identifier.message}</Text>
+                    <Text className="auth-error">
+                      {errors.fields.identifier.message}
+                    </Text>
                   ) : null}
                 </View>
 
@@ -221,7 +231,9 @@ export default function SignIn() {
                     autoComplete="current-password"
                   />
                   {errors?.fields?.password ? (
-                    <Text className="auth-error">{errors.fields.password.message}</Text>
+                    <Text className="auth-error">
+                      {errors.fields.password.message}
+                    </Text>
                   ) : null}
                 </View>
 

@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { HOME_SUBSCRIPTIONS } from '@/constants/data';
+import { create } from "zustand";
+import { HOME_SUBSCRIPTIONS } from "@/constants/data";
 
 interface SubscriptionStore {
   subscriptions: Subscription[];

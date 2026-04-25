@@ -70,7 +70,13 @@ export default function SignUp() {
     }
   };
 
-  const BrandBlock = ({ title, subtitle }: { title: string; subtitle: string }) => (
+  const BrandBlock = ({
+    title,
+    subtitle,
+  }: {
+    title: string;
+    subtitle: string;
+  }) => (
     <View className="auth-brand-block">
       <View className="auth-logo-wrap">
         <View className="auth-logo-mark">
@@ -121,7 +127,9 @@ export default function SignUp() {
                       autoFocus
                     />
                     {errors?.fields?.code ? (
-                      <Text className="auth-error">{errors.fields.code.message}</Text>
+                      <Text className="auth-error">
+                        {errors.fields.code.message}
+                      </Text>
                     ) : null}
                     {localError ? (
                       <Text className="auth-error">{localError}</Text>
@@ -148,7 +156,13 @@ export default function SignUp() {
               </View>
 
               <View className="auth-link-row">
-                <Pressable onPress={() => { setStep("register"); setCode(""); setLocalError(""); }}>
+                <Pressable
+                  onPress={() => {
+                    setStep("register");
+                    setCode("");
+                    setLocalError("");
+                  }}
+                >
                   <Text className="auth-link">← Back to sign up</Text>
                 </Pressable>
               </View>
@@ -193,7 +207,9 @@ export default function SignUp() {
                     autoComplete="email"
                   />
                   {errors?.fields?.emailAddress ? (
-                    <Text className="auth-error">{errors.fields.emailAddress.message}</Text>
+                    <Text className="auth-error">
+                      {errors.fields.emailAddress.message}
+                    </Text>
                   ) : null}
                 </View>
 
@@ -210,7 +226,9 @@ export default function SignUp() {
                     autoComplete="new-password"
                   />
                   {errors?.fields?.password ? (
-                    <Text className="auth-error">{errors.fields.password.message}</Text>
+                    <Text className="auth-error">
+                      {errors.fields.password.message}
+                    </Text>
                   ) : null}
                 </View>
 
@@ -235,7 +253,9 @@ export default function SignUp() {
                 <Pressable
                   className={`auth-button${isLoading || !email || !password || !confirmPassword ? " auth-button-disabled" : ""}`}
                   onPress={handleRegister}
-                  disabled={isLoading || !email || !password || !confirmPassword}
+                  disabled={
+                    isLoading || !email || !password || !confirmPassword
+                  }
                 >
                   <Text className="auth-button-text">
                     {isLoading ? "Creating account…" : "Create account"}

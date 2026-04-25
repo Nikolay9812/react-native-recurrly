@@ -18,9 +18,13 @@ const Row = ({ label, value, onPress }: RowProps) => {
     <>
       <Text className="text-base font-sans-medium text-primary">{label}</Text>
       {value ? (
-        <Text className="text-sm font-sans-medium text-muted-foreground">{value}</Text>
+        <Text className="text-sm font-sans-medium text-muted-foreground">
+          {value}
+        </Text>
       ) : onPress ? (
-        <Text className="text-muted-foreground font-sans-semibold text-lg">›</Text>
+        <Text className="text-muted-foreground font-sans-semibold text-lg">
+          ›
+        </Text>
       ) : null}
     </>
   );
@@ -54,9 +58,7 @@ export default function Settings() {
   };
 
   const displayName =
-    user?.fullName ??
-    user?.emailAddresses[0]?.emailAddress ??
-    "User";
+    user?.fullName ?? user?.emailAddresses[0]?.emailAddress ?? "User";
 
   const email = user?.emailAddresses[0]?.emailAddress ?? "";
 
@@ -68,20 +70,40 @@ export default function Settings() {
       >
         <View className="px-5 pt-6 pb-10 flex-1">
           {/* Header */}
-          <Text className="text-2xl font-sans-bold text-primary mb-6">Settings</Text>
+          <Text className="text-2xl font-sans-bold text-primary mb-6">
+            Settings
+          </Text>
 
           {/* Profile card */}
           <View className="rounded-3xl border border-border bg-card p-6 items-center mb-6">
             {user?.imageUrl ? (
-              <Image source={{ uri: user.imageUrl }} className="size-20 rounded-full mb-3" />
+              <Image
+                source={{ uri: user.imageUrl }}
+                className="size-20 rounded-full mb-3"
+              />
             ) : (
-              <View className="size-20 rounded-full mb-3" style={{ backgroundColor: "#d3d3d3", alignItems: "center", justifyContent: "center" }}>
-                <Text style={{ fontSize: 28, color: "white", fontFamily: "sans-bold" }}>
+              <View
+                className="size-20 rounded-full mb-3"
+                style={{
+                  backgroundColor: "#d3d3d3",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 28,
+                    color: "white",
+                    fontFamily: "sans-bold",
+                  }}
+                >
                   {(displayName ?? "U").charAt(0).toUpperCase()}
                 </Text>
               </View>
             )}
-            <Text className="text-xl font-sans-bold text-primary">{displayName}</Text>
+            <Text className="text-xl font-sans-bold text-primary">
+              {displayName}
+            </Text>
             {email ? (
               <Text className="text-sm font-sans-medium text-muted-foreground mt-1">
                 {email}
@@ -110,10 +132,7 @@ export default function Settings() {
           </View>
 
           {/* Sign out */}
-          <Pressable
-            className="auth-button"
-            onPress={handleSignOut}
-          >
+          <Pressable className="auth-button" onPress={handleSignOut}>
             <Text className="auth-button-text">Sign out</Text>
           </Pressable>
         </View>
